@@ -16,5 +16,18 @@ export type Movie =   {
   vote_average: number,
   vote_count: number
 }
+export type MovieCast = {
+  movieId: number;
+  actorName: string;
+  roleName: string;
+  roleDescription: string;
+};
+// Used to validate the query string of HTTP Get requests
+export type MovieCastMemberQueryParams = {
+  movieId: string;
+  actorName?: string;
+  roleName?: string
+}
+
 
  
