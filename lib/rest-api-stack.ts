@@ -35,7 +35,7 @@ export class RestAPIStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       tableName: "MovieReviews",
     });
-
+//
     movieCastsTable.addLocalSecondaryIndex({
       indexName: "roleIx",
       sortKey: { name: "roleName", type: dynamodb.AttributeType.STRING },
