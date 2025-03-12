@@ -35,7 +35,7 @@ export class RestAPIStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       tableName: "MovieReviews",
     });
-//
+
     movieCastsTable.addLocalSecondaryIndex({
       indexName: "roleIx",
       sortKey: { name: "roleName", type: dynamodb.AttributeType.STRING },
@@ -88,8 +88,8 @@ export class RestAPIStack extends cdk.Stack {
             REGION: "eu-west-1",
           },
         });
-        //  Functions .....
-    const getMovieCastMembersFn = new lambdanode.NodejsFunction(
+
+      const getMovieCastMembersFn = new lambdanode.NodejsFunction(
       this,
       "GetCastMemberFn",
       {
@@ -104,7 +104,38 @@ export class RestAPIStack extends cdk.Stack {
         },
       }
     );
+    //Reviews functions
+    const getReviewsFn = new lambdanode.NodejsFunction
+    (this, "GetReviewsFn", 
+    {
+      runtime: lambda.Runtime.NODEJS_18_X,
+      architecture: lambda.Architecture.ARM_64,
+      entry: `${__dirname}/../lambdas/getReviews.ts`,
+      environment: {
+        TABLE_NAME: movieReviewsTable.tableName,
+      },
+      timeout: cdk.Duration.seconds(10),
+    });
 
+    const postReviewFn = new lambdanode.NodejsFunction(this, "PostReviewFn", {
+      runtime: lambda.Runtime.NODEJS_18_X,
+      architecture: lambda.Architecture.ARM_64,
+      entry: `${__dirname}/../lambdas/postReview.ts`,
+      environment: {
+        TABLE_NAME: movieReviewsTable.tableName,
+      },
+      timeout: cdk.Duration.seconds(10),
+    });
+    
+    const updateReviewFn = new lambdanode.NodejsFunction(this, "UpdateReviewFn", {
+      runtime: lambda.Runtime.NODEJS_18_X,
+      architecture: lambda.Architecture.ARM_64,
+      entry: `${__dirname}/../lambdas/updateReview.ts`,
+      environment: {
+        TABLE_NAME: movieReviewsTable.tableName,
+      },
+      timeout: cdk.Duration.seconds(10),
+    });
         
         new custom.AwsCustomResource(this, "moviesddbInitData", {
           onCreate: {
@@ -130,6 +161,11 @@ export class RestAPIStack extends cdk.Stack {
         moviesTable.grantReadData(getAllMoviesFn)
         moviesTable.grantReadWriteData(newMovieFn)
         movieCastsTable.grantReadData(getMovieCastMembersFn);
+
+        //Reviews Premissions
+        movieReviewsTable.grantReadWriteData(getReviewsFn);
+        movieReviewsTable.grantReadWriteData(postReviewFn);
+        movieReviewsTable.grantReadWriteData(updateReviewFn);
         
         //REST api
         const api = new apig.RestApi(this, "RestAPI", {
@@ -167,8 +203,17 @@ export class RestAPIStack extends cdk.Stack {
             "GET",
             new apig.LambdaIntegration(getMovieCastMembersFn, { proxy: true })
         );
-        
-        
+        //Reviews endpoints
+        const movieReviewsEndpoint = moviesEndpoint.addResource("reviews");
+        //GET
+        const reviewsByMovieId = movieReviewsEndpoint.addResource("{movieId}");
+        reviewsByMovieId.addMethod("GET", new apig.LambdaIntegration(getReviewsFn, { proxy: true }));
+        //POST
+        movieReviewsEndpoint.addMethod("POST", new apig.LambdaIntegration(postReviewFn, { proxy: true }));
+        //PUT
+        const reviewById = reviewsByMovieId.addResource("{reviewId}");
+        reviewById.addMethod("PUT", new apig.LambdaIntegration(updateReviewFn));
+
       }
     }
     
