@@ -1,7 +1,7 @@
 import { marshall } from "@aws-sdk/util-dynamodb";
-import { Movie, MovieCast } from "./types";
+import { Movie, MovieCast, Review } from "./types";
 
-type Entity = Movie | MovieCast;  // NEW
+type Entity = Movie | MovieCast | Review;  
 export const generateItem = (entity: Entity) => {
   return {
     PutRequest: {

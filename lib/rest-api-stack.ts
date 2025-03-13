@@ -6,7 +6,7 @@ import * as custom from "aws-cdk-lib/custom-resources";
 import { Construct } from "constructs";
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 import { generateBatch } from "../shared/util";
-import { movies, movieCasts } from "../seed/movies";
+import { movies, movieCasts, movieReviews } from "../seed/movies";
 import * as apig from "aws-cdk-lib/aws-apigateway";
 
 
@@ -31,7 +31,7 @@ export class RestAPIStack extends cdk.Stack {
     const movieReviewsTable = new dynamodb.Table(this, "MovieReviewsTable", {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       partitionKey: { name: "movieId", type: dynamodb.AttributeType.NUMBER },
-      sortKey: { name: "ReviewDate", type: dynamodb.AttributeType.NUMBER },
+      sortKey: { name: "reviewId", type: dynamodb.AttributeType.NUMBER },
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       tableName: "MovieReviews",
     });
@@ -144,17 +144,19 @@ export class RestAPIStack extends cdk.Stack {
             parameters: {
               RequestItems: {
                 [moviesTable.tableName]: generateBatch(movies),
-                [movieCastsTable.tableName]: generateBatch(movieCasts),  // Added
+                [movieCastsTable.tableName]: generateBatch(movieCasts),
+                [movieReviewsTable.tableName]: generateBatch(movieReviews),  
               },
             },
             physicalResourceId: custom.PhysicalResourceId.of("moviesddbInitData"), //.of(Date.now().toString()),
           },
           policy: custom.AwsCustomResourcePolicy.fromSdkCalls({
-            resources: [moviesTable.tableArn, movieCastsTable.tableArn],  // Includes movie cast
+            resources: [moviesTable.tableArn, movieCastsTable.tableArn,  movieReviewsTable.tableArn], //Added policy for reviews table
           }),
         });
-    
-    
+        console.log("Seeding Reviews:", generateBatch(movieReviews).length);
+        console.log("Review seed preview:", movieReviews);
+
         
         // Permissions 
         moviesTable.grantReadData(getMovieByIdFn)

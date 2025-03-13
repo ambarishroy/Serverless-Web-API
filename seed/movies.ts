@@ -1,5 +1,5 @@
 //import {Movie, MovieCastMemberQueryParams} from '../shared/types'
-import {Movie, MovieCast} from '../shared/types'
+import {Movie, MovieCast, Review} from '../shared/types'
 
 export const movies : Movie[] = [
   {
@@ -132,182 +132,6 @@ export const movies : Movie[] = [
   },
   {
     adult: false,
-    backdrop_path: '/1jITxVJhkiFJuQuj8NcPLmDNtJg.jpg',
-    genre_ids: [ 18, 35, 53 ],
-    id: 930564,
-    original_language: 'en',
-    original_title: 'Saltburn',
-    overview: "Struggling to find his place at Oxford University, student Oliver Quick finds himself drawn into the world of the charming and aristocratic Felix Catton, who invites him to Saltburn, his eccentric family's sprawling estate, for a summer never to be forgotten.",
-    popularity: 658.86,
-    poster_path: '/qjhahNLSZ705B5JP92YMEYPocPz.jpg',
-    release_date: '2023-11-16',
-    title: 'Saltburn',
-    video: false,
-    vote_average: 7.1,
-    vote_count: 473
-  },
-  {
-    adult: false,
-    backdrop_path: '/1X7vow16X7CnCoexXh4H4F2yDJv.jpg',
-    genre_ids: [ 80, 18, 36 ],
-    id: 466420,
-    original_language: 'en',
-    original_title: 'Killers of the Flower Moon',
-    overview: 'When oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one—until the FBI steps in to unravel the mystery.',
-    popularity: 612.671,
-    poster_path: '/dB6Krk806zeqd0YNp2ngQ9zXteH.jpg',
-    release_date: '2023-10-18',
-    title: 'Killers of the Flower Moon',
-    video: false,
-    vote_average: 7.5,
-    vote_count: 1647
-  },
-  {
-    adult: false,
-    backdrop_path: '/ktHEdqmMWC1wdfPRMRCTZe2OISL.jpg',
-    genre_ids: [ 27, 9648, 53 ],
-    id: 1071215,
-    original_language: 'en',
-    original_title: 'Thanksgiving',
-    overview: 'After a Black Friday riot ends in tragedy, a mysterious Thanksgiving-inspired killer terrorizes Plymouth, Massachusetts - the birthplace of the holiday. Picking off residents one by one, what begins as random revenge killings are soon revealed to be part of a larger, sinister holiday plan.',
-    popularity: 606.566,
-    poster_path: '/f5f3TEVst1nHHyqgn7Z3tlwnBIH.jpg',
-    release_date: '2023-11-16',
-    title: 'Thanksgiving',
-    video: false,
-    vote_average: 6.7,
-    vote_count: 347
-  },
-  {
-    adult: false,
-    backdrop_path: '/k1KrbaCMACQiq7EA0Yhw3bdzMv7.jpg',
-    genre_ids: [ 16, 10751, 10402, 14, 35 ],
-    id: 901362,
-    original_language: 'en',
-    original_title: 'Trolls Band Together',
-    overview: "When Branch's brother, Floyd, is kidnapped for his musical talents by a pair of nefarious pop-star villains, Branch and Poppy embark on a harrowing and emotional journey to reunite the other brothers and rescue Floyd from a fate even worse than pop-culture obscurity.",
-    popularity: 563.374,
-    poster_path: '/bkpPTZUdq31UGDovmszsg2CchiI.jpg',
-    release_date: '2023-10-12',
-    title: 'Trolls Band Together',
-    video: false,
-    vote_average: 7.2,
-    vote_count: 436
-  },
-  {
-    adult: false,
-    backdrop_path: '/4XM8DUTQb3lhLemJC51Jx4a2EuA.jpg',
-    genre_ids: [ 28, 80, 53 ],
-    id: 385687,
-    original_language: 'en',
-    original_title: 'Fast X',
-    overview: "Over many missions and against impossible odds, Dom Toretto and his family have outsmarted, out-nerved and outdriven every foe in their path. Now, they confront the most lethal opponent they've ever faced: A terrifying threat emerging from the shadows of the past who's fueled by blood revenge, and who is determined to shatter this family and destroy everything—and everyone—that Dom loves, forever.",
-    popularity: 537.344,
-    poster_path: '/fiVW06jE7z9YnO4trhaMEdclSiC.jpg',
-    release_date: '2023-05-17',
-    title: 'Fast X',
-    video: false,
-    vote_average: 7.2,
-    vote_count: 4566
-  },
-  {
-    adult: false,
-    backdrop_path: '/hRPKfuotMeyRiXXGPKmmrVXD5DG.jpg',
-    genre_ids: [ 28 ],
-    id: 504148,
-    original_language: 'en',
-    original_title: 'The Serpent',
-    overview: "Top special agent Lucinda Kavsky works for a secret part of the CIA. She's given a special assignment but then set up by her own agency.",
-    popularity: 530.362,
-    poster_path: '/AvMoan3rxCDZpNf59BmAP2G8q5x.jpg',
-    release_date: '2021-01-28',
-    title: 'The Serpent',
-    video: false,
-    vote_average: 3.8,
-    vote_count: 12
-  },
-  {
-    adult: false,
-    backdrop_path: '/kjQBrc00fB2RjHZB3PGR4w9ibpz.jpg',
-    genre_ids: [ 28, 12, 878 ],
-    id: 670292,
-    original_language: 'en',
-    original_title: 'The Creator',
-    overview: 'Amid a future war between the human race and the forces of artificial intelligence, a hardened ex-special forces agent grieving the disappearance of his wife, is recruited to hunt down and kill the Creator, the elusive architect of advanced AI who has developed a mysterious weapon with the power to end the war—and mankind itself.',
-    popularity: 519.619,
-    poster_path: '/vBZ0qvaRxqEhZwl6LWmruJqWE8Z.jpg',
-    release_date: '2023-09-27',
-    title: 'The Creator',
-    video: false,
-    vote_average: 7.2,
-    vote_count: 1645
-  },
-  {
-    adult: false,
-    backdrop_path: '/X8yF6STUk5Zr5nAuLBJiio8Sxh.jpg',
-    genre_ids: [ 18, 10749 ],
-    id: 1143183,
-    original_language: 'tl',
-    original_title: 'Rewind',
-    overview: "Mary (Marian Rivera) loves John (Dingdong Dantes) for as long as she can remember. But after years of marriage, John's priorities shift, leading to a strained relationship with Mary, which causes a tragic accident that takes away Mary's life. Until one day, John gets an extraordinary proposition - to rewind time and save the life of the woman he loves.",
-    popularity: 506.227,
-    poster_path: '/vW80VheMJhHsj0pDVYJL3qAMWMd.jpg',
-    release_date: '2023-12-25',
-    title: 'Rewind',
-    video: false,
-    vote_average: 0,
-    vote_count: 0
-  },
-  {
-    adult: false,
-    backdrop_path: '/4mmrgZW9bcgMRFdV1lCcXqCEXEr.jpg',
-    genre_ids: [ 28, 18, 12, 9648, 53 ],
-    id: 755401,
-    original_language: 'en',
-    original_title: 'Skydog',
-    overview: 'After a high school senior working on his pilot’s license rescues a dog named Oreo, he finds out his mom is a CIA agent who’s been captured. He teams up with Oreo and a new friend to find his mother and uncover double agents inside the CIA.',
-    popularity: 504.779,
-    poster_path: '/5M3bY1rl9QIQSmrAGPEt9qutj64.jpg',
-    release_date: '2020-10-20',
-    title: 'Skydog',
-    video: false,
-    vote_average: 7.3,
-    vote_count: 8
-  },
-  {
-    adult: false,
-    backdrop_path: '/zIYROrkHJPYB3VTiW1L9QVgaQO.jpg',
-    genre_ids: [ 28, 35 ],
-    id: 897087,
-    original_language: 'en',
-    original_title: 'Freelance',
-    overview: 'An ex-special forces operative takes a job to provide security for a journalist as she interviews a dictator, but a military coup breaks out in the middle of the interview, they are forced to escape into the jungle where they must survive.',
-    popularity: 501.319,
-    poster_path: '/7Bd4EUOqQDKZXA6Od5gkfzRNb0.jpg',
-    release_date: '2023-10-05',
-    title: 'Freelance',
-    video: false,
-    vote_average: 6.5,
-    vote_count: 390
-  },
-  {
-    adult: false,
-    backdrop_path: '/t5zCBSB5xMDKcDqe91qahCOUYVV.jpg',
-    genre_ids: [ 27, 9648 ],
-    id: 507089,
-    original_language: 'en',
-    original_title: "Five Nights at Freddy's",
-    overview: "Recently fired and desperate for work, a troubled young man named Mike agrees to take a position as a night security guard at an abandoned theme restaurant: Freddy Fazbear's Pizzeria. But he soon discovers that nothing at Freddy's is what it seems.",
-    popularity: 496.682,
-    poster_path: '/7BpNtNfxuocYEVREzVMO75hso1l.jpg',
-    release_date: '2023-10-25',
-    title: "Five Nights at Freddy's",
-    video: false,
-    vote_average: 7.8,
-    vote_count: 2993
-  },
-  {
-    adult: false,
     backdrop_path: '/9jPoyxjiEYPylUIMI3Ntixf8z3M.jpg',
     genre_ids: [ 16, 12, 35, 10751 ],
     id: 520758,
@@ -348,6 +172,30 @@ export const movieCasts: MovieCast[] = [
     roleName: "Male Character 1",
     roleDescription: "description of character 3",
   },
+]
+export const movieReviews: Review[] = [
+  {
+    movieId: 848326,
+    reviewId: 1001,
+    ReviewerId: "roy@gmail.com",
+    ReviewDate: "2025-01-15",
+    Content: "A thrilling sci-fi experience with a great storyline."
+  },
+  {
+    movieId: 848326,
+    reviewId: 1002,
+    ReviewerId: "das@gmail.com",
+    ReviewDate: "2025-01-18",
+    Content: "Fantastic visuals and world-building!"
+  },
+  {
+    movieId: 572802,
+    reviewId: 1003,
+    ReviewerId: "Keeran@gmail.com",
+    ReviewDate: "2025-01-20",
+    Content: "Could have been better in terms of pacing."
+  }
 ];
+
 
 
