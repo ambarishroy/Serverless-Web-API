@@ -109,7 +109,37 @@
                 "movieId"
             ],
             "type": "object"
+        },
+       "Review": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "movieId": {
+          "type": "number"
+        },
+        "reviewId": {
+          "type": "number"
+        },
+        "ReviewerId": {
+          "type": "string",
+          "format": "email"
+        },
+        "ReviewDate": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "Content": {
+          "type": "string"
         }
+      },
+      "required": [
+        "movieId",
+        "reviewId",
+        "ReviewerId",
+        "ReviewDate",
+        "Content"
+      ]
+    }
     }
 }
 

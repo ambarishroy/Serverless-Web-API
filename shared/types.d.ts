@@ -28,6 +28,15 @@ export type MovieCastMemberQueryParams = {
   actorName?: string;
   roleName?: string
 }
+//Review structure
+export type Review = {
+  movieId: number;
+  reviewId: number;
+  ReviewerId: string;
+  ReviewDate: string;
+  // rating: number;
+  Content: string;
+};
 
 
  
