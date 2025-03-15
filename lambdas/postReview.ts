@@ -43,7 +43,7 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
         TableName: process.env.TABLE_NAME,
         Item: {
           movieId: body.movieId,
-          reviewId: body.reviewId,
+          reviewId: Date.now(),
           ReviewerId: body.ReviewerId,
           ReviewDate: body.ReviewDate,
           Content: body.Content,
