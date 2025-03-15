@@ -34,7 +34,6 @@ export type Review = {
   reviewId: number;
   ReviewerId: string;
   ReviewDate: string;
-  // rating: number;
   Content: string;
 };
 
