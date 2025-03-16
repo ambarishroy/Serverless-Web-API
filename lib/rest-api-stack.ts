@@ -9,6 +9,8 @@ import { generateBatch } from "../shared/util";
 import { movies, movieCasts, movieReviews } from "../seed/movies";
 import * as apig from "aws-cdk-lib/aws-apigateway";
 import { UserPool } from "aws-cdk-lib/aws-cognito";
+import * as iam from "aws-cdk-lib/aws-iam";
+
 
 
 export class RestAPIStack extends cdk.Stack {
@@ -265,6 +267,19 @@ export class RestAPIStack extends cdk.Stack {
         const moviePath = reviewPath.addResource("{movieId}");
         const translationPath = moviePath.addResource("translation");
         translationPath.addMethod("GET", new apig.LambdaIntegration(translateReviewFn));
+        //auth routes
+        this.addAuthRoute(
+          "signup",
+          "POST",
+          "SignupFn",
+          'signup.ts'
+        );
+        this.addAuthRoute(
+          "confirm_signup",
+          "POST",
+          "ConfirmFn",
+          "confirm-signup.ts"
+        );
       }
       private addAuthRoute(
         resourceName: string,
@@ -290,7 +305,7 @@ export class RestAPIStack extends cdk.Stack {
         
         const fn = new lambdanode.NodejsFunction(this, fnName, {
           ...commonFnProps,
-          entry: `${__dirname}/../lambda/auth/${fnEntry}`,
+          entry: `${__dirname}/../lambdas/auth/${fnEntry}`,
         });
     
         resource.addMethod(method, new apig.LambdaIntegration(fn));
