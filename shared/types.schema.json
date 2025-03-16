@@ -1,6 +1,22 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
+        "ConfirmSignUpBody": {
+            "additionalProperties": false,
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "code",
+                "username"
+            ],
+            "type": "object"
+        },
         "Movie": {
             "additionalProperties": false,
             "properties": {
@@ -110,35 +126,70 @@
             ],
             "type": "object"
         },
-       "Review": {
-        "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "movieId": {
-          "type": "number"
+        "Review": {
+            "additionalProperties": false,
+            "properties": {
+                "Content": {
+                    "type": "string"
+                },
+                "ReviewDate": {
+                    "type": "string"
+                },
+                "ReviewerId": {
+                    "type": "string"
+                },
+                "movieId": {
+                    "type": "number"
+                },
+                "reviewId": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "Content",
+                "ReviewDate",
+                "ReviewerId",
+                "movieId",
+                "reviewId"
+            ],
+            "type": "object"
         },
-        "reviewId": {
-          "type": "number"
+        "SignInBody": {
+            "additionalProperties": false,
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "password",
+                "username"
+            ],
+            "type": "object"
         },
-        "ReviewerId": {
-          "type": "string",
-          "format": "email"
-        },
-        "ReviewDate": {
-          "type": "string",
-          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
-        },
-        "Content": {
-          "type": "string"
+        "SignUpBody": {
+            "additionalProperties": false,
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "email",
+                "password",
+                "username"
+            ],
+            "type": "object"
         }
-      },
-      "required": [
-        "movieId",
-        "ReviewerId",
-        "ReviewDate",
-        "Content"
-      ]
-    }
     }
 }
 
