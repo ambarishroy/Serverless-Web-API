@@ -136,6 +136,16 @@ export class RestAPIStack extends cdk.Stack {
       },
       timeout: cdk.Duration.seconds(10),
     });
+    const translateReviewFn = new lambdanode.NodejsFunction(this, "TranslateReviewFn", {
+      runtime: lambda.Runtime.NODEJS_18_X,
+      architecture: lambda.Architecture.ARM_64,
+      entry: `${__dirname}/../lambdas/translateReview.ts`,
+      environment: {
+        TABLE_NAME: movieReviewsTable.tableName,
+        REGION: "eu-west-1",
+      },
+      timeout: cdk.Duration.seconds(10),
+    });
         
         new custom.AwsCustomResource(this, "moviesddbInitData", {
           onCreate: {
@@ -148,7 +158,7 @@ export class RestAPIStack extends cdk.Stack {
                 [movieReviewsTable.tableName]: generateBatch(movieReviews),  
               },
             },
-            physicalResourceId: custom.PhysicalResourceId.of("moviesddbInitData"), //.of(Date.now().toString()),
+            physicalResourceId: custom.PhysicalResourceId.of("moviesddbInitData"),
           },
           policy: custom.AwsCustomResourcePolicy.fromSdkCalls({
             resources: [moviesTable.tableArn, movieCastsTable.tableArn,  movieReviewsTable.tableArn], //Added policy for reviews table
@@ -168,6 +178,13 @@ export class RestAPIStack extends cdk.Stack {
         movieReviewsTable.grantReadWriteData(getReviewsFn);
         movieReviewsTable.grantReadWriteData(postReviewFn);
         movieReviewsTable.grantReadWriteData(updateReviewFn);
+        movieReviewsTable.grantReadData(translateReviewFn);
+        translateReviewFn.addToRolePolicy(
+          new cdk.aws_iam.PolicyStatement({
+            actions: ["translate:TranslateText"],
+            resources: ["*"],
+          })
+        );
         
         //REST api
         const api = new apig.RestApi(this, "RestAPI", {
@@ -212,11 +229,16 @@ export class RestAPIStack extends cdk.Stack {
         reviewsByMovieId.addMethod("GET", new apig.LambdaIntegration(getReviewsFn, { proxy: true }));
         //POST
         movieReviewsEndpoint.addMethod("POST", new apig.LambdaIntegration(postReviewFn, { proxy: true }));
-        //PUT
-      
+        //PUT      
         const reviewsPath = specificMovieEndpoint.addResource("reviews");
         const reviewIdPath = reviewsPath.addResource("{reviewId}");
         reviewIdPath.addMethod("PUT", new apig.LambdaIntegration(updateReviewFn));
+        //GET review translation
+        const reviewsRoot = api.root.addResource("reviews");
+        const reviewPath = reviewsRoot.addResource("{reviewId}");
+        const moviePath = reviewPath.addResource("{movieId}");
+        const translationPath = moviePath.addResource("translation");
+        translationPath.addMethod("GET", new apig.LambdaIntegration(translateReviewFn));
       }
     }
     
