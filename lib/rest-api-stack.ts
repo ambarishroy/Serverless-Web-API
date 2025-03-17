@@ -228,13 +228,13 @@ export class RestAPIStack extends cdk.Stack {
             allowOrigins: ["*"],
           },
         });
-        const appApi = new apig.RestApi(this, "AppApi", {
-          description: "App RestApi",
-          endpointTypes: [apig.EndpointType.REGIONAL],
-          defaultCorsPreflightOptions: {
-            allowOrigins: apig.Cors.ALL_ORIGINS,
-          },
-        });
+        // const appApi = new apig.RestApi(this, "AppApi", {
+        //   description: "App RestApi",
+        //   endpointTypes: [apig.EndpointType.REGIONAL],
+        //   defaultCorsPreflightOptions: {
+        //     allowOrigins: apig.Cors.ALL_ORIGINS,
+        //   },
+        // });
     
         const appCommonFnProps = {
           architecture: lambda.Architecture.ARM_64,
@@ -248,19 +248,19 @@ export class RestAPIStack extends cdk.Stack {
             REGION: cdk.Aws.REGION,
           },
         };
-        const protectedRes = appApi.root.addResource("protected");
+    // const protectedRes = appApi.root.addResource("protected");
 
-    const publicRes = appApi.root.addResource("public");
+    // const publicRes = appApi.root.addResource("public");
 
-    const protectedFn = new lambdanode.NodejsFunction(this, "ProtectedFn", {
-      ...appCommonFnProps,
-      entry: "./lambdas/protected.ts",
-    });
+    // const protectedFn = new lambdanode.NodejsFunction(this, "ProtectedFn", {
+    //   ...appCommonFnProps,
+    //   entry: "./lambdas/protected.ts",
+    // });
 
-    const publicFn = new lambdanode.NodejsFunction(this, "PublicFn", {
-      ...appCommonFnProps,
-      entry: "./lambdas/public.ts",
-    });
+    // const publicFn = new lambdanode.NodejsFunction(this, "PublicFn", {
+    //   ...appCommonFnProps,
+    //   entry: "./lambdas/public.ts",
+    // });
 
     const authorizerFn = new lambdanode.NodejsFunction(this, "AuthorizerFn", {
       ...appCommonFnProps,
@@ -276,12 +276,12 @@ export class RestAPIStack extends cdk.Stack {
       }
     );
 
-    protectedRes.addMethod("GET", new apig.LambdaIntegration(protectedFn), {
-      authorizer: requestAuthorizer,
-      authorizationType: apig.AuthorizationType.CUSTOM,
-    });
+    // protectedRes.addMethod("GET", new apig.LambdaIntegration(protectedFn), {
+    //   authorizer: requestAuthorizer,
+    //   authorizationType: apig.AuthorizationType.CUSTOM,
+    // });
 
-    publicRes.addMethod("GET", new apig.LambdaIntegration(publicFn));
+    // publicRes.addMethod("GET", new apig.LambdaIntegration(publicFn));
 
         // Movies endpoint
         const moviesEndpoint = api.root.addResource("movies");
@@ -311,11 +311,19 @@ export class RestAPIStack extends cdk.Stack {
         const reviewsByMovieId = movieReviewsEndpoint.addResource("{movieId}");
         reviewsByMovieId.addMethod("GET", new apig.LambdaIntegration(getReviewsFn, { proxy: true }));
         //POST
-        movieReviewsEndpoint.addMethod("POST", new apig.LambdaIntegration(postReviewFn, { proxy: true }));
+        movieReviewsEndpoint.addMethod("POST", new apig.LambdaIntegration(postReviewFn, { proxy: true }),
+        {
+          authorizer: requestAuthorizer,
+          authorizationType: apig.AuthorizationType.CUSTOM,
+        });
         //PUT      
         const reviewsPath = specificMovieEndpoint.addResource("reviews");
         const reviewIdPath = reviewsPath.addResource("{reviewId}");
-        reviewIdPath.addMethod("PUT", new apig.LambdaIntegration(updateReviewFn));
+        reviewIdPath.addMethod("PUT", new apig.LambdaIntegration(updateReviewFn),
+        {
+          authorizer: requestAuthorizer,
+          authorizationType: apig.AuthorizationType.CUSTOM,
+        });
         //GET review translation
         const reviewsRoot = api.root.addResource("reviews");
         const reviewPath = reviewsRoot.addResource("{reviewId}");

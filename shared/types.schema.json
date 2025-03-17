@@ -149,8 +149,7 @@
                 "Content",
                 "ReviewDate",
                 "ReviewerId",
-                "movieId",
-                "reviewId"
+                "movieId"
             ],
             "type": "object"
         },

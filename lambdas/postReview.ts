@@ -4,6 +4,13 @@ import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 import Ajv from "ajv";
 import schema from "../shared/types.schema.json";
 import addFormats from "ajv-formats";
+import {
+  CookieMap,
+  createPolicy,
+  JwtToken,
+  parseCookies,
+  verifyToken,
+} from "./utils";
 
 const ajv = new Ajv();
 addFormats(ajv);
@@ -11,6 +18,20 @@ const isValidReview = ajv.compile(schema.definitions["Review"] || {});
 const ddbDocClient = createDdbDocClient();
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
+   console.log("[EVENT]", JSON.stringify(event));
+    const cookies: CookieMap = parseCookies(event);
+    if (!cookies) {
+      return {
+        statusCode: 200,
+        body: "Unauthorised request!!",
+      };
+    }
+    const verifiedJwt: JwtToken = await verifyToken(
+      cookies.token,
+      process.env.USER_POOL_ID,
+      process.env.REGION!
+    );
+    console.log(JSON.stringify(verifiedJwt));
   try {
     console.log("[EVENT]", JSON.stringify(event));
     const body = event.body ? JSON.parse(event.body) : undefined;
