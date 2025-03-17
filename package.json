@@ -12,6 +12,8 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.147",
+    "@types/axios": "^0.9.36",
+    "@types/jwk-to-pem": "^2.0.3",
     "@types/node": "22.12.0",
     "aws-cdk": "2.176.0",
     "esbuild": "^0.24.2",
@@ -25,10 +27,14 @@
     "@aws-sdk/client-translate": "^3.758.0",
     "@aws-sdk/lib-dynamodb": "^3.738.0",
     "@aws-sdk/util-dynamodb": "^3.738.0",
+    "@types/jsonwebtoken": "^9.0.9",
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
     "aws-cdk-lib": "2.176.0",
+    "axios": "^1.8.3",
     "constructs": "^10.4.2",
+    "jsonwebtoken": "^9.0.2",
+    "jwk-to-pem": "^2.0.7",
     "source-map-support": "^0.5.21"
   }
 }
