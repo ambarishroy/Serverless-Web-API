@@ -4,6 +4,7 @@ import {
     PolicyDocument,
     APIGatewayProxyEvent,
     StatementEffect,
+    APIGatewayProxyEventV2,
   } from "aws-lambda";
   
   import axios from "axios"
@@ -24,7 +25,7 @@ import {
   };
   
   export const parseCookies = (
-    event: APIGatewayRequestAuthorizerEvent | APIGatewayProxyEvent
+    event: APIGatewayRequestAuthorizerEvent | APIGatewayProxyEvent | APIGatewayProxyEventV2
   ) => {
     if (!event.headers || !event.headers.Cookie) {
       return undefined;

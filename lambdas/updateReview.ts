@@ -2,6 +2,13 @@ import { APIGatewayProxyHandlerV2 } from "aws-lambda";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import Ajv from "ajv";
+import {
+  CookieMap,
+  createPolicy,
+  JwtToken,
+  parseCookies,
+  verifyToken,
+} from "./utils";
 
 const ajv = new Ajv();
 
@@ -17,6 +24,20 @@ const isValidUpdate = ajv.compile({
 const ddbDocClient = createDdbDocClient();
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
+   console.log("[EVENT]", JSON.stringify(event));
+      const cookies: CookieMap = parseCookies(event);
+      if (!cookies) {
+        return {
+          statusCode: 200,
+          body: "Unauthorised request!!",
+        };
+      }
+      const verifiedJwt: JwtToken = await verifyToken(
+        cookies.token,
+        process.env.USER_POOL_ID,
+        process.env.REGION!
+      );
+      console.log(JSON.stringify(verifiedJwt));
   try {
     const movieId = event.pathParameters?.movieId;
     const reviewId = event.pathParameters?.reviewId;
