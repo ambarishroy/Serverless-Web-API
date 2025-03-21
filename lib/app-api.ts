@@ -16,8 +16,6 @@ type AppApiProps = {
 };
 
 export class AppApi extends Construct {
-//   userPoolId: string;
-//   userPoolClientId: string;
 
   constructor(scope: Construct, id: string, props: AppApiProps) {
     super(scope, id);
