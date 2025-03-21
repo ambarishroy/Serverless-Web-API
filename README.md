@@ -71,7 +71,7 @@ export class AuthApi extends Construct {
   private userPoolId: string;
   private userPoolClientId: string;
 ~~~
- ]
+
 
 #### Restricted review updates (if completed)
 
