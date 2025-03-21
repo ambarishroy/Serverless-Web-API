@@ -82,6 +82,7 @@ Reviews can only be posted and updated by authorized user. The user must be sign
 
 The api has validations. They are as follows:
 getReviews.ts-->
+~~~
  if (!movieId) {
       return {
         statusCode: 400,
@@ -89,7 +90,9 @@ getReviews.ts-->
         body: JSON.stringify({ message: "Missing path parameter: movieId" }),
       };
     }
+~~~
 postReview.ts-->
+~~~
  if (!cookies) {
       return {
         statusCode: 200,
@@ -118,11 +121,15 @@ if (!isValidReview(body)) {
         }),
       };
     }
+~~~
 translateReview.ts-->
+~~~
 if (!reviewId || !movieId || !languageCode) {
       return response(400, { message: "Missing path or query parameters." });
     }
+~~~
 updateReview.ts-->
+~~~
 if (!movieId || !reviewId) {
       return response(400, { message: "Missing path parameters" });
     }
@@ -133,6 +140,6 @@ if (!body || !isValidUpdate(body)) {
         errors: isValidUpdate.errors,
       });
     }
-
+~~~
 
 
